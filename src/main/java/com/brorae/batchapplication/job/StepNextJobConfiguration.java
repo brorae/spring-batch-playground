@@ -15,23 +15,45 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-public class SimpleJobConfiguration {
+public class StepNextJobConfiguration {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
 
     @Bean
-    public Job simpleJob() {
-        return new JobBuilder("simpleJob", jobRepository)
-                .start(simpleStep())
+    public Job stepNextJob() {
+        return new JobBuilder("stepNextJob", jobRepository)
+                .start(step1())
+                .next(step2())
+                .next(step3())
                 .build();
     }
 
     @Bean
-    public Step simpleStep() {
-        return new StepBuilder("simpleStep", jobRepository)
+    public Step step1() {
+        return new StepBuilder("step1", jobRepository)
                 .tasklet(((contribution, chunkContext) -> {
-                    log.info(">>>> This is SimpleStep");
+                    log.info(">>>>> This is Step1");
+                    return RepeatStatus.FINISHED;
+                }), platformTransactionManager)
+                .build();
+    }
+
+    @Bean
+    public Step step2() {
+        return new StepBuilder("step2", jobRepository)
+                .tasklet(((contribution, chunkContext) -> {
+                    log.info(">>>>> This is Step2");
+                    return RepeatStatus.FINISHED;
+                }), platformTransactionManager)
+                .build();
+    }
+
+    @Bean
+    public Step step3() {
+        return new StepBuilder("step3", jobRepository)
+                .tasklet(((contribution, chunkContext) -> {
+                    log.info(">>>>> This is Step3");
                     return RepeatStatus.FINISHED;
                 }), platformTransactionManager)
                 .build();

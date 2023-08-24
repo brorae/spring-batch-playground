@@ -1,8 +1,8 @@
 spring:
-  config:
-    activate:
-      on-profile: local
+  profiles:
+    active: local
 
+spring.batch.job.name: ${job.name:NONE}
 ---
 
 spring:
@@ -28,3 +28,4 @@ spring:
       username: root
       password:
       driver-class-name: com.mysql.cj.jdbc.Driver
+
