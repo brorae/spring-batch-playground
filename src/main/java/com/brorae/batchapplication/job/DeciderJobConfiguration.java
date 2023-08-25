@@ -31,11 +31,11 @@ public class DeciderJobConfiguration {
                 .start(startStep())
                 .next(decider())
                 .from(decider())
-                    .on("ODD")
-                    .to(oddStep())
+                .on("ODD")
+                .to(oddStep())
                 .from(decider())
-                    .on("EVEN")
-                    .to(evenStep())
+                .on("EVEN")
+                .to(evenStep())
                 .end()
                 .build();
     }
@@ -84,7 +84,7 @@ public class DeciderJobConfiguration {
             int randomNumber = random.nextInt(50) + 1;
             log.info("랜덤 숫자 : {}", randomNumber);
 
-            if(randomNumber % 2 == 0) {
+            if (randomNumber % 2 == 0) {
                 return new FlowExecutionStatus("EVEN");
             }
             return new FlowExecutionStatus("ODD");

@@ -19,11 +19,13 @@ public class SimpleJobConfiguration {
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
+    private final SimpleJobTasklet simpleJobTasklet;
 
     @Bean
-    public Job simpleJob() {
-        return new JobBuilder("simpleJob", jobRepository)
+    public Job simpleJob1() {
+        return new JobBuilder("simpleJob1", jobRepository)
                 .start(simpleStep())
+                .next(simpleStep1())
                 .build();
     }
 
@@ -34,6 +36,13 @@ public class SimpleJobConfiguration {
                     log.info(">>>> This is SimpleStep");
                     return RepeatStatus.FINISHED;
                 }), platformTransactionManager)
+                .build();
+    }
+
+    @Bean
+    public Step simpleStep1() {
+        return new StepBuilder("simpleStep1", jobRepository)
+                .tasklet(simpleJobTasklet, platformTransactionManager)
                 .build();
     }
 }

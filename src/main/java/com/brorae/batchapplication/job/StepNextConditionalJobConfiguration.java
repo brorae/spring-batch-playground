@@ -2,7 +2,6 @@ package com.brorae.batchapplication.job;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -25,16 +24,16 @@ public class StepNextConditionalJobConfiguration {
     public Job stepNextConditionalJob() {
         return new JobBuilder("stepNextConditionalJob", jobRepository)
                 .start(conditionalJobStep1())
-                    .on("FAILED")
-                    .to(conditionalJobStep3())
-                    .on("*")
-                    .end()
+                .on("FAILED")
+                .to(conditionalJobStep3())
+                .on("*")
+                .end()
                 .from(conditionalJobStep1())
-                    .on("*")
-                    .to(conditionalJobStep2())
-                    .next(conditionalJobStep3())
-                    .on("*")
-                    .end()
+                .on("*")
+                .to(conditionalJobStep2())
+                .next(conditionalJobStep3())
+                .on("*")
+                .end()
                 .end()
                 .build();
     }
