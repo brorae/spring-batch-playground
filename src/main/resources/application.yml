@@ -4,7 +4,11 @@ spring:
   batch:
     job:
       name: ${job.name:NONE}
-#logging:
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
 #  pattern:
 #    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
 #  level:
@@ -12,6 +16,7 @@ spring:
 #    com.brorae.batchapplication: debug
 
 logging.level.org.springframework.batch: DEBUG
+
 
 ---
 
