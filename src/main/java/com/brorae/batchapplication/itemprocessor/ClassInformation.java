@@ -4,9 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +14,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Teacher {
+public class ClassInformation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +22,10 @@ public class Teacher {
 
     private String name;
 
-    @OneToMany(mappedBy = "teacher")
-    private List<Student> students = new ArrayList<>();
+    private int size;
+
+    public ClassInformation(String name, int size) {
+        this.name = name;
+        this.size = size;
+    }
 }
